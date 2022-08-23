@@ -1,2 +1,12 @@
-package PACKAGE_NAME;public class Main {
+import infra.Application;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Application app = new Application();
+        app.run();
+
+    }
+
 }
