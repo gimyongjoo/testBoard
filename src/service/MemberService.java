@@ -16,4 +16,8 @@ public class MemberService {
         return memberRepository.saveMember(loginId, passward, name);
     }
 
+    public boolean isExistByLoginId(String loginId){
+        return memberRepository.isExistByLoginId(loginId);
+    }
+
 }
