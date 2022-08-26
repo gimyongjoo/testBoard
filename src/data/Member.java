@@ -10,8 +10,8 @@ public class Member {
     private String password;
     private String name;
 
-    private LocalDateTime regDate;
-    private LocalDateTime updateDate;
+    private LocalDateTime regDate = LocalDateTime.now();
+    private LocalDateTime updateDate = LocalDateTime.now();
 
     public Member(int id, String loginId, String passward, String name){
 
@@ -52,6 +52,10 @@ public class Member {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDateTime getRegDate() {
+        return regDate;
     }
 
     public LocalDateTime getUpdateDate() {

@@ -34,4 +34,7 @@ public class MemberService {
         return false;
     }
 
+    public Member getMemberByLoginId(String loginId) {
+        return memberRepository.getMemberByLoignId(loginId);
+    }
 }
