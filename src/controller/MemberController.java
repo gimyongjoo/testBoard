@@ -7,6 +7,7 @@ import service.MemberService;
 import utils.Util;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -41,6 +42,9 @@ public class MemberController implements Controller {
                 break;
             case "delete":
                 delete(request);
+                break;
+            case "list":
+                list();
                 break;
             default:
                 System.out.println("올바른 요청을 보내주시기 바랍니다.");
@@ -194,6 +198,18 @@ public class MemberController implements Controller {
         }else{
             System.out.println("y 혹은 n을 정확하게 입력하여 주시기 바랍니다.");
         }
+    }
+
+    public void list(){
+        System.out.println("== 회원 목록 ==");
+
+        List<Member> members = memberService.getMembers();
+
+        System.out.println("회원 번호 | 아이디");
+        for(Member member : members){
+            System.out.println(member.getId() + " | " + member.getLoginId());
+        }
+
     }
 
 }
