@@ -62,4 +62,8 @@ public class Article {
     public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
     }
+
+    public LocalDateTime getRegDate() {
+        return regDate;
+    }
 }

@@ -12,6 +12,17 @@ public class ArticleRepository {
 
     private List<Article> store = new ArrayList<>();
 
+    public Article getById(int id) {
+
+        for(Article article : store){
+            if(article.getId() == id){
+                return article;
+            }
+        }
+        return null;
+
+    }
+
     public int write(String title, String body, String author) {
 
         articleId += 1;
