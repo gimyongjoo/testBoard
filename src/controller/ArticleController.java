@@ -6,6 +6,7 @@ import infra.Request;
 import service.ArticleService;
 import utils.Util;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class ArticleController implements Controller{
@@ -21,12 +22,18 @@ public class ArticleController implements Controller{
 
     @Override
     public void execute(Request request) {
-        switch (request.getTarget()){
+        switch (request.getTarget()) {
             case "write":
                 write(request);
                 break;
             case "detail":
                 detail(request);
+                break;
+            case "delete":
+                delete(request);
+                break;
+            case "modify":
+                modify(request);
                 break;
             default:
                 System.out.println("존재하지 않는 요청입니다.");
@@ -61,7 +68,7 @@ public class ArticleController implements Controller{
 
         String paramKey = "id";
 
-        if(Util.hasParam(request, paramKey)){
+        if(!Util.hasParam(request, paramKey)){
             System.out.println(paramKey + "파라미터가 필요합니다.");
             return;
         }
@@ -80,7 +87,72 @@ public class ArticleController implements Controller{
         System.out.println("제목 : " + findArticle.getTitle());
         System.out.println("내용 : " + findArticle.getBody());
         System.out.println("작성일 : " + findArticle.getRegDate());
+        System.out.println("수정일 : " + findArticle.getUpdateDate());
 
+    }
+
+    public void delete(Request request){
+
+        String paramKey = "id";
+
+        if(!Util.hasParam(request, paramKey)){
+            System.out.println(paramKey + "파라미터가 필요합니다.");
+            return;
+        }
+
+        int articleId = request.getParameterIntValue(paramKey);
+
+        Article findArticle = articleService.getById(articleId);
+
+        if(findArticle == null){
+            System.out.println("해당 게시글은 존재하지 않습니다.");
+            return;
+        }
+
+        if(!request.getLogonMemberId().equals(findArticle.getAuthor())){
+            System.out.println("권한이 없습니다.");
+            return;
+        }
+
+        articleService.delete(findArticle);
+
+        System.out.println("성공적으로 삭제되었습니다.");
+    }
+
+    public void modify(Request request){
+
+        String paramKey = "id";
+
+        if(!Util.hasParam(request, paramKey)){
+            System.out.println(paramKey + "파라미터가 필요합니다.");
+            return;
+        }
+
+        int articleId = request.getParameterIntValue(paramKey);
+
+        Article findArticle = articleService.getById(articleId);
+
+        if(findArticle == null){
+            System.out.println("해당 게시글은 존재하지 않습니다.");
+            return;
+        }
+
+        if(!request.getLogonMemberId().equals(findArticle.getAuthor())){
+            System.out.println("권한이 없습니다.");
+        }
+
+        System.out.println(" == " + articleId + "번 게시글 수정 ==");
+        System.out.println("제목 : ");
+        String newTitle = sc.nextLine().trim();
+
+        System.out.println("내용 : ");
+        String newBody = sc.nextLine().trim();
+
+        findArticle.setTitle(newTitle);
+        findArticle.setBody(newBody);
+        findArticle.setUpdateDate(LocalDateTime.now());
+
+        System.out.println("게시글이 성공적으로 수정되었습니다.");
     }
 
 }

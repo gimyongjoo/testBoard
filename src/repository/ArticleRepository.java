@@ -32,4 +32,8 @@ public class ArticleRepository {
         return articleId;
 
     }
+
+    public void delete(Article article) {
+        store.remove(article);
+    }
 }
